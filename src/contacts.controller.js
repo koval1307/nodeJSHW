@@ -7,8 +7,8 @@ const {
   findContactById,
   removeContact,
   addContact,
-  updateContact,
-} = require("./contacts.models.js");
+  modifyContactById,
+} = require("./contacts.model.js");
 
 exports.createContact = async (req, res, next) => {
   try {
@@ -52,7 +52,7 @@ exports.updateContact = async (req, res, next) => {
     if (!contact) {
       return res.status(404).send({ message: "Contact not found" });
     }
-    const updatedContact = await updateContact(contactId, req.body);
+    const updatedContact = await modifyContactById(contactId, req.body);
     return res.status(200).send(updatedContact);
   } catch (err) {
     next(err);
