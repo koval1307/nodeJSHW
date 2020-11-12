@@ -10,6 +10,7 @@ const { validate } = require("./helpers/validate.Middleware");
 const {
   addContactSchema,
   updateContactSchema,
+  validateIdSchema,
 } = require("./contacts.schemes.js");
 
 const router = Router();
@@ -18,10 +19,19 @@ router.post("/", validate(addContactSchema), createContact);
 
 router.get("/", getContacts);
 
-router.get("/:contactId", getContactById);
+router.get("/:contactId",validate(validateIdSchema, "params"), getContactById);
 
-router.patch("/:contactId", validate(updateContactSchema), updateContact);
+router.patch(
+  "/:contactId",
+  validate(validateIdSchema, "params"),
+  validate(updateContactSchema),
+  updateContact
+);
 
-router.delete("/:contactId", removeContact);
+router.delete(
+  "/:contactId",
+  validate(validateIdSchema, "params"),
+  removeContact
+);
 
 exports.contactsRouter = router;
