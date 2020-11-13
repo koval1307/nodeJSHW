@@ -1,3 +1,4 @@
+
 const { Router } = require("express");
 const {
   createContact,
@@ -19,7 +20,7 @@ router.post("/", validate(addContactSchema), createContact);
 
 router.get("/", getContacts);
 
-router.get("/:contactId",validate(validateIdSchema, "params"), getContactById);
+router.get("/:contactId", validate(validateIdSchema, "params"), getContactById);
 
 router.patch(
   "/:contactId",
