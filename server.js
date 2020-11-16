@@ -1,14 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "./.env") });
 const cors = require("cors");
+const monngoose = require ("mongoose")
+const { contactsRouter } = require("./src/contacts/contacts.router");
 
-const { contactsRouter } = require("./contacts.router");
 
 exports.CrudServer = class {
-  start() {
+  async start() {
     this.initServer();
-    // this.initDatabase();
+    await this.initDatabase();
     this.initMiddlewares();
     this.initRoutes();
     this.initErrorHandling();
@@ -19,6 +21,14 @@ exports.CrudServer = class {
     this.app = express();
   }
 
+  async initDatabase() {
+    try {
+      await monngoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+      console.log("success")
+    }
+    catch (err) { console.log(err);  process.exit(1);}
+
+  }
   initMiddlewares() {
     this.app.use(express.json());
     this.app.use(morgan("tiny"));
