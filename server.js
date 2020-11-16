@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "./.env") });
 const cors = require("cors");
 const monngoose = require ("mongoose")
-const { contactsRouter } = require("./contacts.router");
+const { contactsRouter } = require("./src/contacts/contacts.router");
 
 
 exports.CrudServer = class {

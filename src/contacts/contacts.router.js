@@ -7,7 +7,7 @@ const {
   updateContact,
   removeContact,
 } = require("./contacts.controller.js");
-const { validate } = require("./helpers/validate.Middleware");
+const { validate } = require("../helpers/validate.Middleware");
 const {
   addContactSchema,
   updateContactSchema,
