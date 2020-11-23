@@ -29,7 +29,7 @@ exports.login = async (req, res, next) => {
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Unauthorized("Email or password is wrong");
+      throw new Unauthorized("Not authorized");
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,

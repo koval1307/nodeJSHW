@@ -1,7 +1,5 @@
+const {serializeUser} = require("./users.serializer")
+
 exports.getCurretUser = (req, res, next) => {
-  const { subscription, email } = req.user;
-  res.status(200).send({
-    subscription,
-    email,
-  });
+  res.status(200).send(serializeUser(req.user))
 };

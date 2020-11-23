@@ -57,7 +57,7 @@ exports.CrudServer = class {
   }
 
   startListening() {
-    const PORT = 3005;
+    const PORT = process.env.PORT;
     this.app.listen(PORT, () => {
       console.log("Server started listenning on PORT", PORT);
     });

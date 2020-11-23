@@ -9,11 +9,11 @@ exports.authorize = async (req, res, next) => {
     try {
       payload = await jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
-      throw new Unauthorized("Not valid token or not provided");
+      throw new Unauthorized("Not authorized");
     }
     const user = await UserModel.findById(payload.userId);
     if (!user) {
-      throw new Unauthorized("Not valid token");
+      throw new Unauthorized("Not authorized");
     }
     req.user = user;
     next();
