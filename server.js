@@ -5,6 +5,8 @@ require("dotenv").config({ path: path.join(__dirname, "./.env") });
 const cors = require("cors");
 const monngoose = require ("mongoose")
 const { contactsRouter } = require("./src/contacts/contacts.router");
+const { authRouter } = require("./src/auth/auth.router")
+const {userRouter} = require("./src/users/users.router")
 
 
 exports.CrudServer = class {
@@ -23,8 +25,13 @@ exports.CrudServer = class {
 
   async initDatabase() {
     try {
-      await monngoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-      console.log("success")
+      await monngoose.connect(process.env.MONGODB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+      });
+      console.log("succesfull")
     }
     catch (err) { console.log(err);  process.exit(1);}
 
@@ -37,6 +44,9 @@ exports.CrudServer = class {
 
   initRoutes() {
     this.app.use("/contacts", contactsRouter);
+    this.app.use("/auth", authRouter);
+       this.app.use("/users", userRouter);
+
   }
 
   initErrorHandling() {
@@ -47,7 +57,7 @@ exports.CrudServer = class {
   }
 
   startListening() {
-    const PORT = 3000;
+    const PORT = process.env.PORT;
     this.app.listen(PORT, () => {
       console.log("Server started listenning on PORT", PORT);
     });
