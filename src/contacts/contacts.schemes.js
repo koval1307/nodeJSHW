@@ -1,6 +1,7 @@
 
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
+
 exports.addContactSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),

@@ -1,7 +1,9 @@
 const  UserModel  = require('../users/users.model')
 const bcrypt = require('bcrypt');
 const { Conflict, NotFound, Unauthorized } = require('../helpers/errors')
+const { generateAvatar } = require("../helpers/avatarGenerator");
 const jwt = require("jsonwebtoken");
+
 exports.register = async (req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -9,17 +11,26 @@ exports.register = async (req, res, next) => {
         if (existingUser) {
             throw new Conflict("Email in use");
         }
+      const avatarURL = await generateAvatar();
+
         const passwordHash = await bcrypt.hash(
           password,
           Number(process.env.SALT_ROUNDS)
         );
-        const newUser = await UserModel.create({ email, password: passwordHash })
-        res.status(201).send({ subcription: newUser.subcription, email: newUser.email })
+        const newUser = await UserModel.create({ email, password: passwordHash,avatarURL })
+        res
+          .status(201)
+          .send({
+            subcription: newUser.subcription,
+            email: newUser.email,
+           avatarURL
+          });
     }
     catch (err) {
         next(err)
     }
 };
+
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -44,12 +55,14 @@ exports.login = async (req, res, next) => {
       user: {
         email: user.email,
         subscription: user.subscription,
+        avatarURL:user.avatarURL
       },
     });
   } catch (error) {
     next(error);
   }
 };
+
 exports.logout = async (req, res, next) => {
   try {
     const { _id } = req.user;
