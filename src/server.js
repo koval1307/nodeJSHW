@@ -17,9 +17,17 @@ exports.CrudServer = class {
     this.initErrorHandling();
     this.startListening();
   }
+
+  async startForTests() {
+       this.initServer();
+       await this.initDatabase();
+       this.initMiddlewares();
+       this.initRoutes();
+       this.initErrorHandling();
+  }
   initServer() {
     this.app = express();
-         this.app.use("/images", express.static(__dirname + "/public/images"));
+    this.app.use("/images", express.static(__dirname + "/public/images"));
   }
   async initDatabase() {
     try {
@@ -30,7 +38,7 @@ exports.CrudServer = class {
         useCreateIndex: true,
       });
       console.log("succesfull");
-          console.log(__dirname);
+      console.log(__dirname);
     } catch (err) {
       console.log(err);
       process.exit(1);

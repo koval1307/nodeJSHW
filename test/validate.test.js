@@ -11,7 +11,7 @@ describe("Validation middleware test suite", () => {
   before(() => {
     const testSchema = Joi.object({
       email: Joi.string().email().required(),
-                password: Joi.string().required(),
+password: Joi.string().required(),
     });
     validationMiddleware = validate(testSchema);
     resMock = {

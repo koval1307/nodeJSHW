@@ -17,17 +17,17 @@
     "mongoose": "^5.10.13",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "nodemon": "^2.0.6",
-    "uuid": "^8.3.1",
-    "yargs": "^16.1.0"
+    "nodemon": "^2.0.6"
   },
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
-    "sinon": "^9.2.1"
+    "sinon": "^9.2.1",
+    "supertest": "^6.0.1"
   },
   "scripts": {
-    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\"",
+    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\" --timeout 20000 --exit",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
