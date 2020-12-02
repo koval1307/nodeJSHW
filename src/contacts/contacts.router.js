@@ -15,7 +15,6 @@ const {
 } = require("./contacts.schemes.js");
 
 const router = Router();
-
 router.post("/", validate(addContactSchema), createContact);
 
 router.get("/", getContacts);

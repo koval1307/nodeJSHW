@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../users/users.model");
 const { Unauthorized } = require("./errors");
+
 exports.authorize = async (req, res, next) => {
   try {
     const authHeader = req.get("Authorization" || "");

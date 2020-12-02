@@ -4,7 +4,6 @@ const { ContactModel } = require("./contacts.model.js");
 exports.createContact = async (req, res, next) => {
   try {
     const newContact = await ContactModel.create(req.body);
-
     return res.status(201).send(newContact);
   } catch (err) {
     next(err);
@@ -42,13 +41,10 @@ exports.updateContact = async (req, res, next) => {
     const { contactId } = req.params;
        const contactForUpdate = req.body;
     const updatedContact = await ContactModel.findByIdAndUpdate(contactId, contactForUpdate, { new: true });
- 
-    console.log(contact)
     if (!updatedContact) {
       return res.status(404).send({ message: "Contact not found" });
     }
     return res.status(200).send(updatedContact);
-  
   } catch (err) {
     next(err);
   }
@@ -58,7 +54,6 @@ exports.removeContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
     const contactToDelete = await ContactModel.findByIdAndDelete(contactId);
-  
     if (!contactToDelete) {
       return res.status(404).send({ message: "Contact not found" });
     }
