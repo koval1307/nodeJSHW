@@ -38,9 +38,7 @@ exports.CrudServer = class {
         useCreateIndex: true,
       });
       console.log("succesfull");
-      console.log(__dirname);
     } catch (err) {
-      console.log(err);
       process.exit(1);
     }
   }
