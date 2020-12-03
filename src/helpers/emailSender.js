@@ -15,7 +15,6 @@ exports.sendVerificationEmail = async (email, verificationToken) => {
     await sgMail.send(msg);
     console.log("Email send");
   } catch (error) {
-    console.error(error);
   }
 };
 

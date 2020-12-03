@@ -14,7 +14,6 @@ exports.register = async (req, res, next) => {
             throw new Conflict("Email in use");
         }
       const avatarURL = await generateAvatar();
-
         const passwordHash = await bcrypt.hash(
           password,
           Number(process.env.SALT_ROUNDS)
